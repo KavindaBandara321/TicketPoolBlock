@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TicketPoolSyancTest {
+public class TicketPoolBlockTest {
     @Test
     public void testAddAndPurchaseTicket() {
         TicketPoolBlock ticketPool = new TicketPoolBlock(1);

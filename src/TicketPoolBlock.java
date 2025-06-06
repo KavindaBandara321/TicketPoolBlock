@@ -19,30 +19,37 @@ public class TicketPoolBlock implements TicketPool {
         System.out.println("No of tickets currently available in the queue: " + ticketQueue.size());
     }
 
+
     @Override
     public void addTicket(Ticket ticket) {
-
-        boolean success = ticketQueue.offer(ticket);
-        noOfTicketsOffered++;
-        if (success) {
+        try {
+            ticketQueue.put(ticket);
             noOfTicketsOffered++;
             System.out.println(Thread.currentThread().getName() +
                     " added TicketNumber: " + ticket.getTicketId() +
                     ", Vendor: " + ticket.getVendor() +
                     ", Event: " + ticket.getEvent());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
+
+
     }
 
     @Override
     public Ticket purchaseTicket() {
-        Ticket ticket = ticketQueue.poll();
-        if (ticket != null) {
+        try {
+            Ticket ticket = ticketQueue.take(); // Blocks if empty
             noOfTicketsBought++;
             System.out.println(Thread.currentThread().getName() +
                     " purchased TicketNumber: " + ticket.getTicketId() +
                     ", Vendor: " + ticket.getVendor() +
                     ", Event: " + ticket.getEvent());
+            return ticket;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null;
         }
-        return ticket;
+
     }
 }
