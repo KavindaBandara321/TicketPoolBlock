@@ -30,7 +30,7 @@ public class TicketPoolBlock implements TicketPool {
                     ", Vendor: " + ticket.getVendor() +
                     ", Event: " + ticket.getEvent());
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
 
 
@@ -39,7 +39,7 @@ public class TicketPoolBlock implements TicketPool {
     @Override
     public Ticket purchaseTicket() {
         try {
-            Ticket ticket = ticketQueue.take(); // Blocks if empty
+            Ticket ticket = ticketQueue.take();
             noOfTicketsBought++;
             System.out.println(Thread.currentThread().getName() +
                     " purchased TicketNumber: " + ticket.getTicketId() +
@@ -47,7 +47,7 @@ public class TicketPoolBlock implements TicketPool {
                     ", Event: " + ticket.getEvent());
             return ticket;
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            e.printStackTrace();
             return null;
         }
 
